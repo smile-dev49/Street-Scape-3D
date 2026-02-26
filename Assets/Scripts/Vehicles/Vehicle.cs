@@ -14,6 +14,7 @@ namespace StreetEscape.Vehicles
         [SerializeField] private bool useLocalDirection;
 
         private bool _isActive;
+        private Vector3 _spawnPosition;
 
         private void Update()
         {
@@ -25,10 +26,14 @@ namespace StreetEscape.Vehicles
 
         public void Activate(Vector3 position)
         {
+            _spawnPosition = position;
             transform.position = position;
             _isActive = true;
             gameObject.SetActive(true);
         }
+
+        /// <summary>Distance from current position to spawn (for despawn/return-to-pool logic).</summary>
+        public float DistanceFromSpawn => Vector3.Distance(transform.position, _spawnPosition);
 
         public void Deactivate()
         {
